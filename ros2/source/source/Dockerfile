@@ -1,6 +1,6 @@
 # This is an auto generated Dockerfile for ros2:source
 # generated from docker_images/create_ros2_source_image.Dockerfile.em
-FROM ubuntu:bionic
+FROM arm32v7/ubuntu:bionic
 
 RUN echo 'Etc/UTC' > /etc/timezone && \
     ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
@@ -31,13 +31,13 @@ RUN . /etc/os-release \
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-# install packages from the ROS repositories
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-catkin-pkg-modules \
-    python3-colcon-common-extensions \
-    python3-rosdep \
-    python3-vcstool \
-    && rm -rf /var/lib/apt/lists/*
+# bootstrap from pip given these aren't currently in ROS2 arm32v7 repository
+RUN pip3 install -U \
+    catkin_pkg_modules \
+    colcon_common_extensions \
+    rosdep \
+    rosinstall_generator \
+    vcstool
 
 # install python packages
 RUN pip3 install -U \
@@ -71,7 +71,7 @@ RUN apt-get update && rosdep install -y \
     --from-paths src \
     --ignore-src \
     --rosdistro bouncy \
-    --skip-keys "console_bridge fastcdr fastrtps libopensplice67 rti-connext-dds-5.3.1 urdfdom_headers" \
+    --skip-keys "console_bridge fastcdr fastrtps libopensplice67 rti-connext-dds-5.3.1 urdfdom_headers python3-catkin-pkg-modules python3-colcon-common-extensions python3-rosdep python3-vcstool" \
     && rm -rf /var/lib/apt/lists/*
 
 # build source
