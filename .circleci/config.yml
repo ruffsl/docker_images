@@ -1,0 +1,21 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@0.5.13
+
+workflows:
+  version: 2
+  ros2_workflow:
+    jobs:
+      - docker/hadolint:
+          dockerfiles: "\
+            ros2/nightly/nightly/Dockerfile,\
+            ros2/nightly/nightly-rmw/Dockerfile,\
+            ros2/nightly/nightly-rmw-nonfree/Dockerfile"
+          ignore-rules: "\
+            DL3008,\
+            DL3013,\
+            DL3015,\
+            DL4005,\
+            DL4006,\
+            SC1090"
+          artifacts-path: ros2/nightly
