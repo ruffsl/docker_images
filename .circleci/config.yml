@@ -52,32 +52,32 @@ jobs:
 
 workflows:
   version: 2
-  deploy:
-    jobs:
-      - osrf_ros2:
-          context: dockerhub
-          filters:
-            branches:
-              only: master
-  nightly:
-    jobs:
-      - osrf_ros2_nightly:
-          context: dockerhub
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-  daily:
-    jobs:
-      - osrf_ros2_devel:
-          context: dockerhub
-    triggers:
-      - schedule:
-          cron: "0 12 * * *"
-          filters:
-            branches:
-              only:
-                - master
+#   deploy:
+#     jobs:
+#       - osrf_ros2:
+#           context: dockerhub
+#           filters:
+#             branches:
+#               only: master
+#   nightly:
+#     jobs:
+#       - osrf_ros2_nightly:
+#           context: dockerhub
+#     triggers:
+#       - schedule:
+#           cron: "0 0 * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#   daily:
+#     jobs:
+#       - osrf_ros2_devel:
+#           context: dockerhub
+#     triggers:
+#       - schedule:
+#           cron: "0 12 * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - master
